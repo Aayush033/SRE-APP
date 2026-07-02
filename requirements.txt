@@ -1,0 +1,28 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# SRE-Brain Requirements
+# Install with: pip install -r requirements.txt
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Core data modelling
+pydantic>=2.0.0
+
+# Dashboard UI
+streamlit>=1.30.0
+
+# Data processing & charting
+pandas>=2.0.0
+altair>=5.0.0
+numpy>=1.26.0
+
+# Config parsing
+pyyaml>=6.0.0
+
+# Google Gemini AI (LLM-powered agent reasoning)
+google-generativeai>=0.7.0
+
+# Testing & evaluation
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Environment variable loading
+python-dotenv>=1.0.0

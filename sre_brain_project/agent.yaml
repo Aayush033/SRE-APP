@@ -1,0 +1,35 @@
+version: "1.0"
+metadata:
+  name: "SRE-Brain"
+  description: "Chaos Mitigation & Post-Mortem Multi-Agent System"
+  author: "SRE Team"
+
+runtime:
+  python: ">=3.10"
+  entrypoint: "ui.dashboard:main"
+
+agents:
+  - name: "TelemetryTriageAgent"
+    path: "agents/telemetry_agent.py"
+    description: "Parses system server log streams to build a chronological timeline of events during outages."
+  
+  - name: "CommsSyncAgent"
+    path: "agents/comms_agent.py"
+    description: "Ingests Slack developers chat logs, applies context compaction, and formats executive updates."
+
+  - name: "PostMortemAgent"
+    path: "agents/post_mortem_agent.py"
+    description: "Gathers system parameters, RCA diagnostics, and timeline logs to compile markdown regulatory post-mortems."
+
+skills:
+  - name: "mcp_github"
+    path: "skills/mcp_github.py"
+    type: "mcp_server"
+  
+  - name: "mcp_slack"
+    path: "skills/mcp_slack.py"
+    type: "mcp_server"
+
+  - name: "calculate_impact"
+    path: "skills/calculate_impact.py"
+    type: "function"

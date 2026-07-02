@@ -1,0 +1,131 @@
+{
+  "alert_detection": {
+    "checkout_storm": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "dns_cascade": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1": 0.857
+    },
+    "latency_loop": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "mttd": {
+    "checkout_storm": {
+      "mttd_seconds": 60,
+      "expected_seconds": 60,
+      "delta_seconds": 0,
+      "grade": "\u2705 PASS"
+    },
+    "dns_cascade": {
+      "mttd_seconds": 30,
+      "expected_seconds": 75,
+      "delta_seconds": 45,
+      "grade": "\u2705 PASS"
+    },
+    "latency_loop": {
+      "mttd_seconds": 70,
+      "expected_seconds": 45,
+      "delta_seconds": 25,
+      "grade": "\u2705 PASS"
+    }
+  },
+  "financial_accuracy": {
+    "checkout_storm@330s": {
+      "expected": 46750.0,
+      "actual": 46750.0,
+      "error_pct": 0.0,
+      "grade": "\u2705 PASS"
+    },
+    "dns_cascade@600s": {
+      "expected": 40000.0,
+      "actual": 40000.0,
+      "error_pct": 0.0,
+      "grade": "\u2705 PASS"
+    },
+    "latency_loop@480s": {
+      "expected": 25600.0,
+      "actual": 25600.0,
+      "error_pct": 0.0,
+      "grade": "\u2705 PASS"
+    },
+    "custom_lab@120s": {
+      "expected": 3000.0,
+      "actual": 3000.0,
+      "error_pct": 0.0,
+      "grade": "\u2705 PASS"
+    }
+  },
+  "anomaly_detector": {
+    "Healthy baseline": {
+      "expected_min_anomalies": 0,
+      "actual_anomalies": 0,
+      "anomalies_detected": [],
+      "grade": "\u2705 PASS"
+    },
+    "Black Friday peak (checkout_storm at 12:01:20)": {
+      "expected_min_anomalies": 3,
+      "actual_anomalies": 3,
+      "anomalies_detected": [
+        "latency_ms",
+        "db_connections",
+        "error_rate"
+      ],
+      "grade": "\u2705 PASS"
+    },
+    "DNS cascade peak": {
+      "expected_min_anomalies": 2,
+      "actual_anomalies": 2,
+      "anomalies_detected": [
+        "latency_ms",
+        "error_rate"
+      ],
+      "grade": "\u2705 PASS"
+    },
+    "Minor latency spike": {
+      "expected_min_anomalies": 1,
+      "actual_anomalies": 1,
+      "anomalies_detected": [
+        "latency_ms"
+      ],
+      "grade": "\u2705 PASS"
+    }
+  },
+  "graph_pipeline": {
+    "checkout_storm": {
+      "checks": {
+        "timeline_populated": true,
+        "three_email_drafts": true,
+        "postmortem_generated": true,
+        "postmortem_has_header": true
+      },
+      "execution_time_ms": 1.2,
+      "grade": "\u2705 PASS"
+    },
+    "dns_cascade": {
+      "checks": {
+        "timeline_populated": true,
+        "three_email_drafts": true,
+        "postmortem_generated": true,
+        "postmortem_has_header": true
+      },
+      "execution_time_ms": 2.8,
+      "grade": "\u2705 PASS"
+    }
+  }
+}
