@@ -111,12 +111,16 @@ def init_session():
         "sla": 99.99,
         "metrics_history": [],
         "scenario_key": "checkout_storm",
+        "initialized": False,  # 👈 Flag to prevent clearing data on UI reruns
     }
     for k, v in defaults.items():
         if k not in st.session_state:
             st.session_state[k] = v
-    # Always reset the singleton session object from session_state
-    IncidentSession.reset()
+            
+    # 👈 FIX: Only reset the backend database on initial load, not every click!
+    if not st.session_state["initialized"]:
+        IncidentSession.reset()
+        st.session_state["initialized"] = True
 
 init_session()
 
@@ -206,12 +210,13 @@ with st.sidebar:
         key="scenario_key_select",
     )
 
-    if st.button("⚡ Trigger Incident & Run Full Simulation", type="primary", use_container_width=True):
+    # 👈 FIX: Swapped use_container_width for width='stretch' to clear warnings
+    if st.button("⚡ Trigger Incident & Run Full Simulation", type="primary", width="stretch"):
         run_full_simulation(scenario)
         st.session_state["scenario_key"] = scenario
 
-    if st.button("🔄 Reset Dashboard", use_container_width=True):
-        for k in ["sim_running", "sim_phase", "log_idx", "chat_idx", "elapsed", "sla", "metrics_history"]:
+    if st.button("🔄 Reset Dashboard", width="stretch"):
+        for k in ["sim_running", "sim_phase", "log_idx", "chat_idx", "elapsed", "sla", "metrics_history", "initialized"]:
             if k in st.session_state:
                 del st.session_state[k]
         IncidentSession.reset()
@@ -272,7 +277,8 @@ if st.session_state.get("sim_running"):
                 x=alt.X("step:Q", title="Time Step", axis=alt.Axis(grid=False)),
                 y=alt.Y("Latency (ms):Q", title="Latency (ms)")
             ).properties(height=220, title="API Latency")
-            st.altair_chart(latency_chart, use_container_width=True)
+            # 👈 FIX: Updated layout width parameter
+            st.altair_chart(latency_chart, width="stretch")
 
         with ch2:
             error_chart = alt.Chart(metrics_df).mark_area(
@@ -285,7 +291,8 @@ if st.session_state.get("sim_running"):
                 x=alt.X("step:Q", title="Time Step", axis=alt.Axis(grid=False)),
                 y=alt.Y("Error Rate (%):Q", title="Error Rate (%)")
             ).properties(height=220, title="Error Rate")
-            st.altair_chart(error_chart, use_container_width=True)
+            # 👈 FIX: Updated layout width parameter
+            st.altair_chart(error_chart, width="stretch")
 
     # ──────────────────────────────────────────────────────────────
     # Main Content: 3-Column Layout

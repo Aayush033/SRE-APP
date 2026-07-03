@@ -9,11 +9,12 @@ import os
 # ─────────────────────────────────────────────────────────────────────────────
 _gemini_available = False
 try:
-    import google.generativeai as genai
+    # UPDATED: Import from the new genai SDK
+    from google import genai
     _api_key = os.environ.get("GOOGLE_API_KEY", "")
     if _api_key:
-        genai.configure(api_key=_api_key)
-        _gemini_model = genai.GenerativeModel("gemini-1.5-flash")
+        # UPDATED: Initialize the Client instead of global configure
+        _gemini_client = genai.Client(api_key=_api_key)
         _gemini_available = True
 except ImportError:
     pass
@@ -34,9 +35,14 @@ def _generate_rca_hypothesis(timeline_summary: str, scenario_key: str) -> str:
             f"In 2-3 sentences, provide a concise root cause hypothesis "
             f"explaining why this outage occurred and what the likely trigger was."
         )
-        response = _gemini_model.generate_content(prompt)
+        # UPDATED: Use client.models.generate_content and pass both model and contents
+        response = _gemini_client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
         return response.text.strip()
-    except Exception:
+    except Exception as e:
+        # Optional: Print or log 'e' here if you want to debug silent failures later
         return ""
 
 def run_telemetry_agent(state: IncidentState) -> IncidentState:
