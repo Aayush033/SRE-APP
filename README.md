@@ -11,7 +11,7 @@
 
 ## 🎯 What Is SRE-Brain?
 
-SRE-Brain is an **AI-powered Site Reliability Engineering (SRE) platform** that automatically detects, triages, communicates, and documents infrastructure outages — reducing Mean Time to Detect (MTTD) from **~20 minutes to under 30 seconds** and preventing tens of thousands of dollars in losses per incident.
+SRE-Brain is an **AI-powered Site Reliability Engineering (SRE) platform** that automatically detects, triages, communicates, and documents infrastructure outages — designed to detect simulated incident scenarios in under 30 seconds, measured through the included benchmark suite and preventing tens of thousands of dollars in losses per incident.
 
 **A 5-minute Black Friday checkout outage = $42,500 in lost revenue.** SRE-Brain cuts that window dramatically.
 
@@ -66,7 +66,7 @@ SRE-Brain is an **AI-powered Site Reliability Engineering (SRE) platform** that 
 | 💸 **Financial Impact Calculator** | Real-time dollar loss per second per scenario |
 | 📝 **Automated Post-Mortems** | Full regulatory markdown reports with RCA |
 | 🧠 **Gemini AI Integration** | LLM-powered root cause hypothesis & lessons learned |
-| 🔗 **MCP Tool Integration** | GitHub PR context, Slack digest (mock + real) |
+| 🔗 **Integration Layer** | GitHub PR context and Slack digest adapters with mock and live modes |
 | 📈 **Eval Benchmark Suite** | Precision/Recall/F1, MTTD, financial accuracy |
 
 ---
@@ -77,7 +77,7 @@ SRE-Brain is an **AI-powered Site Reliability Engineering (SRE) platform** that 
 SRE_app/
 ├── requirements.txt            # Python dependencies
 ├── Dockerfile                  # Container deployment
-├── .env                
+├── .env.example           
 │
 └── sre_brain_project/
     ├── agent.yaml              # Agent configuration manifest
@@ -98,8 +98,8 @@ SRE_app/
     │   ├── mcp_github.py       # GitHub MCP tool (PR context)
     │   └── mcp_slack.py        # Slack MCP tool
     └── eval/
-        ├── test_eval.py        # 9-suite pytest evaluation
-        └── benchmark.py        # Quantitative benchmark suite
+    │   ├── test_eval.py        # 9-suite pytest evaluation
+    │   └── benchmark.py        # Quantitative benchmark suite
     └── ui/
         ├── dashboard.py        # Frontend code using streamlit
 ```
@@ -203,6 +203,12 @@ Baselines are defined per metric (latency, CPU, DB connections, error rate, requ
 
 ---
 
+## 🎥 Demo
+
+Watch the 3-minute demo: [YouTube link][https://youtu.be/S7yNnyBQDe0]
+
+The demo shows a checkout outage progressing through anomaly detection, AI-assisted triage, stakeholder communication, financial-impact estimation, and automated post-mortem generation.
+
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE)
@@ -212,7 +218,8 @@ MIT License — see [LICENSE](LICENSE)
 ## 🙏 Acknowledgements
 
 Built with:
-- [Google Gemini AI](https://aistudio.google.com) — LLM reasoning layer
+- [OpenAI Codex](https://openai.com/codex/) — Used with GPT‑5.6 to design, build, test, and refine SRE-Brain
+- [Google Gemini AI](https://aistudio.google.com) — Runtime LLM reasoning for RCA hypotheses and lessons learned
 - [Streamlit](https://streamlit.io) — Dashboard UI
 - [Pydantic](https://docs.pydantic.dev) — Data validation
 - [Altair](https://altair-viz.github.io) — Data visualization
